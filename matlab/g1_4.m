@@ -1,0 +1,36 @@
+% define the time range and sampling frequency
+fs = 500;
+fsHigh = 1000;
+fsLow = 100;
+
+Ts = 1/fs;
+TsHigh = 1/fsHigh;
+TsLow = 1/fsLow;
+
+t = -10:0.001:10;
+
+% generate the sampled signal
+x = cos(100*pi*t) + cos(200*pi*t) + sin(500*pi*t);
+
+% define the reconstructed time range
+t_reconstructed=-10:Ts:10;
+t_reconstructedHigh=-10:TsHigh:10;
+t_reconstructedLow=-10:TsLow:10;
+
+% perform linear interpolation to reconstruct the signal
+x_reconstructed = interp1(t, x, t_reconstructed, 'linear');
+x_reconstructedHigh = interp1(t, x, t_reconstructedHigh, 'linear');
+x_reconstructedLow = interp1(t, x, t_reconstructedLow, 'linear');
+
+% plot the original and reconstructed signals
+figure;
+plot(t, x, 'k', 'LineWidth', 2);
+hold on;
+plot(t_reconstructed, x_reconstructed, 'b--', 'LineWidth', 1.5);
+plot(t_reconstructedHigh, x_reconstructedHigh, 'c--', 'LineWidth', 1.5);
+plot(t_reconstructedLow, x_reconstructedLow, 'm--', 'LineWidth', 1.5);
+xlabel('time');
+ylabel('signal');
+legend('original signal', 'reconstructed signal sampling frequency', ...
+    'reconstructed signal high frequency','reconstructed signal low frequency');
+title('signal reconstruction');

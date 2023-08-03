@@ -1,0 +1,37 @@
+
+classdef fourierSequence
+    methods (Static)
+        function x = cos
+            % signal
+            fs = 1000;  % sampling frequency (Hz)
+            T=1; % duration in seconds
+            t = linspace(0, T, T*fs+1); % time values;
+
+            % calculate the function
+            x = cos(2*pi*f*t);
+        end
+
+        function fourier_sequence(signal)
+            % define parameters
+            T = 1;  % signal duration
+            fs = 1000;  % sampling frequency (Hz)
+            %dt = 1/fs;  % time step
+            %t = -T/2 : dt : T/2;  % time vector
+            t = linspace(0, T, T*fs+1); % time values;
+
+            % compute Fourier sequence
+            X = fft(signal);
+            X = X / length(signal);
+            
+            % compute frequency vector
+            f = (-fs/2 : fs/length(t) : fs/2 - fs/length(t));
+
+            % plot magnitude spectrum
+            plot(f, abs(X));
+            xlabel('frequency (Hz)');
+            ylabel('magnitude');
+            title('magnitude spectrum');
+        end
+    end
+end
+
